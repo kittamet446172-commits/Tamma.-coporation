@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #f5f0eb;
+      font-family: 'Inter', sans-serif;
+      color: #3a3028;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: #2a2520;
+      color: #e8ddd4;
+    }
+
+    .landing {
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .landing-name {
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      font-weight: 700;
+      letter-spacing: -2px;
+      color: #2e2318;
+      line-height: 1;
+    }
+
+    body.dark .landing-name { color: #f0ebe5; }
+
+    .landing-sub {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: #8a7060;
+      margin-top: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    body.dark .landing-sub { color: #9a8878; }
+
+    .enter-btn {
+      display: inline-block;
+      margin-top: 48px;
+      padding: 14px 36px;
+      background: #3a2e26;
+      color: #fff8f3;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .enter-btn:hover {
+      background: #5a4a3a;
+      transform: translateY(-2px);
+    }
+
+    body.dark .enter-btn { background: #e8ddd4; color: #24201a; }
+    body.dark .enter-btn:hover { background: #d0c5bc; }
+
+    .dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.6);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s;
+    }
+
+    body.dark .dark-toggle { background: rgba(40,30,20,0.6); }
+  </style>
+</head>
+<body>
+
+  <button class="dark-toggle" id="darkToggle">🌙</button>
+
+  <div class="landing">
+    <h1 class="landing-name">Tamma</h1>
+    <p class="landing-sub">Welcome</p>
+    <a class="enter-btn" href="explore.html">Enter →</a>
+  </div>
+
+  <script>
+    const darkToggle = document.getElementById('darkToggle');
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      darkToggle.textContent = '☀️';
+    }
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      darkToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

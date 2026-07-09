@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <h1 class="site-title">Tamma</h1>
+      <p class="site-subtitle">Aircraft Mechanic & Builder of Things</p>
+    </div>
+    <button class="dark-toggle" id="darkToggle">🌙</button>
+    <nav class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="portfolio">Portfolio</button>
+      <button class="filter-btn" data-filter="project">Project</button>
+      <button class="filter-btn" data-filter="investing">Investing</button>
+      <button class="filter-btn" data-filter="assistant">Assistant</button>
+    </nav>
+  </header>
+
+  <main class="card-grid">
+
+    <div class="card" data-category="investing" data-link="">
+      <div class="card-image">
+        <img src="images/Tenten.jpg" alt="Tenten" />
+        <span class="card-tag">Investing</span>
+      </div>
+      <div class="card-info">
+        <h2 class="card-name">Tenten</h2>
+        <p class="card-role">— 10-K Analyst</p>
+        <p class="card-desc">Reads annual reports and returns company snapshot, fundamentals signal, and moat indicators.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="investing" data-link="">
+      <div class="card-image">
+        <img src="images/Earth.jpg" alt="Earth" />
+        <span class="card-tag">Investing</span>
+      </div>
+      <div class="card-info">
+        <h2 class="card-name">Earth</h2>
+        <p class="card-role">— Earnings Analyst</p>
+        <p class="card-desc">Reads earnings call transcripts for quarterly numbers, guidance, and management commentary.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="investing" data-link="">
+      <div class="card-image">
+        <img src="images/Webtoon.jpg" alt="Webtoon" />
+        <span class="card-tag">Investing</span>
+      </div>
+      <div class="card-info">
+        <h2 class="card-name">Webtoon</h2>
+        <p class="card-role">— News Scout</p>
+        <p class="card-desc">Searches the last 7 days of news, analyst moves, and upcoming catalysts for any ticker.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="investing" data-link="">
+      <div class="card-image">
+        <img src="images/Belinda.jpg" alt="Belinda" />
+        <span class="card-tag">Investing</span>
+      </div>
+      <div class="card-info">
+        <h2 class="card-name">Belinda</h2>
+        <p class="card-role">— Idea Shaper</p>
+        <p class="card-desc">Shapes a stock idea into thesis, blind spots, kill conditions, and research questions before diving in.</p>
+      </div>
+    </div>
+
+
+    <div class="card" data-category="project" data-link="">
+      <div class="card-image">
+        <img src="https://placehold.co/400x500/e8e4c4/7a754f?text=Video" alt="Video" />
+        <span class="card-tag">Project</span>
+      </div>
+      <div class="card-info">
+        <h2 class="card-name">Video</h2>
+        <p class="card-role">— Content Creator</p>
+        <p class="card-desc">Coming soon.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="assistant" data-link="">
+      <div class="card-image">
+        <img src="images/minion.jpg.jpg" alt="Minion" />
+        <span class="card-tag">Assistant</span>
+      </div>
+      <div class="card-info">
+        <h2 class="card-name">Minion</h2>
+        <p class="card-role">— Orchestrator</p>
+        <p class="card-desc">Runs the whole operation. Builds, researches, writes, and keeps Tamma from overthinking.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="https://github.com/kittamet446172" target="_blank">GitHub</a>
+    </div>
+    <p>© 2026 Tamma</p>
+  </footer>
+
+  <!-- POPUP MODAL -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose">✕</button>
+      <img class="modal-img" id="modalImg" src="" alt="" />
+      <div class="modal-content">
+        <span class="modal-tag" id="modalTag"></span>
+        <h2 class="modal-name" id="modalName"></h2>
+        <p class="modal-role" id="modalRole"></p>
+        <p class="modal-desc" id="modalDesc"></p>
+        <a class="modal-link" id="modalLink" href="#" target="_blank" rel="noopener noreferrer">Visit →</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dark mode
+    const darkToggle = document.getElementById('darkToggle');
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      darkToggle.textContent = '☀️';
+    }
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      darkToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Filter
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+
+    // Popup
+    const modal = document.getElementById('modal');
+    const modalClose = document.getElementById('modalClose');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        document.getElementById('modalImg').src = card.querySelector('img').src;
+        document.getElementById('modalTag').textContent = card.querySelector('.card-tag').textContent;
+        document.getElementById('modalName').textContent = card.querySelector('.card-name').textContent;
+        document.getElementById('modalRole').textContent = card.querySelector('.card-role').textContent;
+        document.getElementById('modalDesc').textContent = card.querySelector('.card-desc').textContent;
+        const link = card.dataset.link;
+        const modalLink = document.getElementById('modalLink');
+        if (link) {
+          modalLink.href = link;
+          modalLink.style.display = 'inline-block';
+        } else {
+          modalLink.style.display = 'none';
+        }
+        modal.classList.add('active');
+      });
+    });
+
+    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  </script>
+
+</body>
+</html>
