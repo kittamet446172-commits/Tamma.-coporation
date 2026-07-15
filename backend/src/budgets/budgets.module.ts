@@ -1,0 +1,11 @@
+import { Module } from '@nestjs/common';
+import { BudgetsController } from './budgets.controller';
+import { BudgetsService } from './budgets.service';
+import { AuthModule } from '../auth/auth.module';
+
+@Module({
+  imports: [AuthModule],
+  controllers: [BudgetsController],
+  providers: [BudgetsService],
+})
+export class BudgetsModule {}

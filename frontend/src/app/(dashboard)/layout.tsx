@@ -1,0 +1,44 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useSession } from '@/lib/auth-client'
+import { Sidebar } from '@/components/layout/sidebar'
+import { Navbar } from '@/components/layout/navbar'
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const { data: session, isPending } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isPending && !session) {
+      router.push('/login')
+    }
+  }, [session, isPending, router])
+
+  if (isPending) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-muted-foreground text-sm">กำลังโหลด...</div>
+      </div>
+    )
+  }
+
+  if (!session) return null
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <Navbar />
+        <main className="flex-1 overflow-y-auto p-6 bg-muted/20">
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}
